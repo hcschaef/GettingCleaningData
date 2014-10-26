@@ -52,14 +52,15 @@ run_analysis <- function() {
   
     ## Merging the Training Data in one Data Frame
   df_train = data.frame(subject_train, y_train, x_train)
-  ##write.table(df_train, "df_all_train.csv", sep=";")
+  ##write.table(df_train, "df_train.csv", sep=";", row.name=FALSE)
   
     ## Merging the Test Data in one Data Frame
   df_test = data.frame(subject_test, y_test, x_test)
-  ##write.table(df_test, "df_all_test.csv", sep=";")
+  ##write.table(df_test, "df_test.csv", sep=";", row.name=FALSE)
   
     ## Merging both Data Frames into one
   df <- rbind(df_train, df_test)
+  ##write.table(df, "df_all.csv", sep=";", row.name=FALSE)
   
   message("Finish Part 1c - Merging")
   message("Start Part 2 - Extrating Mean and Std")
@@ -70,7 +71,17 @@ run_analysis <- function() {
   
     ## Create new Data Frame based on the New Column Names
   df <- df[new_columns]
-  ##write.table(df, "df_mean_std.csv", sep=";")
+  ##write.table(df, "df_mean_std.csv", sep=";", row.name=FALSE)
   
   message("Finish Part 2 - Extrating Mean and Std")
+  message("Start Part 3 - Creating the Average")
+  
+  ## 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+  
+  new_columns2 <- grep("mean|std",names(df),value=TRUE)
+  df2 <- aggregate(df[new_columns2], by=df[c("Subject_ID","Activity")], FUN=mean)
+  ##write.table(df2, "df_average.csv", sep=";", row.name=FALSE)
+  write.table(df2, "df_tidy_data.txt", sep=";", row.name=FALSE)
+  
+  message("Finish Part 3 - Creating the Average")
 }
