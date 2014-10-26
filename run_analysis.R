@@ -18,9 +18,6 @@ run_analysis <- function() {
   subject_train$Type <- "Train"
   colnames(subject_train) <- c("Subject_ID", "Type")
   
-  df_train = data.frame(subject_train, y_train, x_train)
-  ##write.table(df_train, "df_all_train.csv", sep=";")
-  
   message("Finish Part 1A - Loading Training")
   message("Start Part 1B - Loading Test")
   
@@ -37,8 +34,24 @@ run_analysis <- function() {
   subject_test$Type <- "Test"
   colnames(subject_test) <- c("Subject_ID", "Type")  
   
+  message("Finish Part 1B - Loading Test")
+  message("Start Part 1c - Merging")
+  
+  df_train = data.frame(subject_train, y_train, x_train)
+  ##write.table(df_train, "df_all_train.csv", sep=";")
+  
   df_test = data.frame(subject_test, y_test, x_test)
   ##write.table(df_test, "df_all_test.csv", sep=";")
   
-  message("Finish Part 1B - Loading Test")
+  df <- rbind(df_train, df_test)
+  
+  message("Finish Part 1c - Merging")
+  message("Start Part 2 - Extrating Mean and Std")
+  
+  new_columns <- c("Subject_ID",  "Type",	"Activity", grep("mean|std",names(df),value=TRUE))
+  
+  df <- df[new_columns]
+  ##write.table(df, "df_mean_std.csv", sep=";")
+  
+  message("Finish Part 2 - Extrating Mean and Std")
 }
