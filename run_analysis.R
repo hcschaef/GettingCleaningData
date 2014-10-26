@@ -67,7 +67,7 @@ run_analysis <- function() {
   
   ## 2. Extracts only the measurements on the mean and standard deviation for each measurement.
     ## Get all Standard Columns and the Mean and Std Columns Names
-  new_columns <- c("Subject_ID",  "Type",	"Activity", grep("mean|std",names(df),value=TRUE))
+  new_columns <- c("Subject_ID",  "Type",	"Activity", grep("mean\\(\\)|std\\(\\)",names(df),value=TRUE))
   
     ## Create new Data Frame based on the New Column Names
   df <- df[new_columns]
